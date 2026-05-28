@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pulse Radio - Programme</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f8ff;
+      --muted: #a5acbb;
+      --white: #ffffff;
+      --line: rgba(255, 255, 255, 0.14);
+      --teal: #23d6c8;
+      --coral: #ff5f83;
+      --amber: #ffd166;
+      --violet: #8f7cff;
+      --panel: rgba(12, 16, 26, 0.78);
+      --shadow: 0 34px 110px rgba(0, 0, 0, 0.48);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 16%, rgba(35, 214, 200, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 14%, rgba(255, 95, 131, 0.16), transparent 34%),
+        linear-gradient(115deg, rgba(3, 5, 10, 0.92), rgba(8, 11, 18, 0.84)),
+        url("https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1900&q=85") center / cover fixed;
+    }
+
+    .page { min-height: 100vh; padding: 28px; }
+
+    .app {
+      width: min(1220px, 100%);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 30px;
+      background: rgba(7, 10, 18, 0.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .mark {
+      width: 44px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--teal), var(--coral));
+      box-shadow: 0 16px 36px rgba(35, 214, 200, 0.22);
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .links a.active {
+      color: #071018;
+      background: var(--white);
+    }
+
+    .nav-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 0 18px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--coral), var(--violet));
+      box-shadow: 0 16px 34px rgba(255, 95, 131, 0.24);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: 24px;
+      padding: 34px;
+      align-items: stretch;
+    }
+
+    .hero {
+      min-height: 390px;
+      border-radius: 24px;
+      padding: clamp(28px, 5vw, 54px);
+      display: flex;
+      align-items: end;
+      color: var(--white);
+      background:
+        linear-gradient(125deg, rgba(4, 8, 16, 0.86), rgba(35, 214, 200, 0.16)),
+        url("https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=1500&q=85") center / cover;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 560px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.7;
+    }
+
+    .now {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pill {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--white);
+      background: rgba(255, 95, 131, 0.16);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff4d61;
+      box-shadow: 0 0 0 7px rgba(255, 77, 97, 0.18);
+    }
+
+    .now h2 {
+      margin: 26px 0 10px;
+      font-size: 2rem;
+      letter-spacing: 0;
+    }
+
+    .now p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      gap: 14px;
+      padding: 0 34px 34px;
+      overflow-x: auto;
+      scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+    }
+
+    .show {
+      min-height: 210px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .time {
+      width: fit-content;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--coral);
+      background: rgba(255, 95, 131, 0.12);
+      font-weight: 900;
+    }
+
+    .show h3 {
+      margin: 18px 0 8px;
+      font-size: 1.35rem;
+      letter-spacing: 0;
+    }
+
+    .show p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .host {
+      margin-top: 18px;
+      color: var(--amber);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    svg {
+      width: 21px;
+      height: 21px;
+      fill: currentColor;
+    }
+
+    @media (max-width: 900px) {
+      .header { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 0; }
+      .app { border: 0; border-radius: 0; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .links { width: 100%; overflow-x: auto; }
+      .nav-action { width: 100%; }
+      .header { padding: 20px; }
+      .hero { min-height: 360px; }
+      .timeline { padding: 0 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="app">
+      <nav class="nav" aria-label="Navigation principale">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-7 7v6a3 3 0 0 0 3 3h1v-8H7v-1a5 5 0 0 1 10 0v1h-2v8h1a3 3 0 0 0 3-3v-6a7 7 0 0 0-7-7z"></path></svg>
+          </div>
+          <span>Pulse Radio</span>
+        </div>
+        <div class="links">
+          <a href="radio.html">Live</a>
+          <a href="podcasts.html">Podcasts</a>
+          <a class="active" href="programme.html">Programme</a>
+        </div>
+        <a class="nav-action" href="https://my.radioalgerie.dz/player/jilfm.html" target="_blank" rel="noopener">Ecouter</a>
+      </nav>
+
+      <section class="header">
+        <div class="hero">
+          <div>
+            <h1>Programme du jour.</h1>
+            <p>Une grille claire et horizontale pour suivre les emissions, les replays et les moments forts de la journee.</p>
+          </div>
+        </div>
+
+        <aside class="now">
+          <div>
+            <div class="pill"><span class="dot"></span> En direct</div>
+            <h2>Night Drive</h2>
+            <p>Deep house, lounge et sons nocturnes pour accompagner la fin de soiree.</p>
+          </div>
+          <a class="nav-action" href="https://my.radioalgerie.dz/player/jilfm.html" target="_blank" rel="noopener">Ouvrir Jil FM</a>
+        </aside>
+      </section>
+
+      <section class="timeline" aria-label="Programme horizontal">
+        <article class="show">
+          <div>
+            <div class="time">08:00</div>
+            <h3>Morning Wave</h3>
+            <p>Musique douce, meteo, humeur et agenda du jour.</p>
+          </div>
+          <div class="host">Avec Lina</div>
+        </article>
+
+        <article class="show">
+          <div>
+            <div class="time">12:30</div>
+            <h3>Midday Mix</h3>
+            <p>Les titres les plus demandes et les nouveautes du moment.</p>
+          </div>
+          <div class="host">Avec Samir</div>
+        </article>
+
+        <article class="show">
+          <div>
+            <div class="time">18:00</div>
+            <h3>Afterwork Live</h3>
+            <p>Invites, culture, transitions fluides et selection premium.</p>
+          </div>
+          <div class="host">Avec Amel</div>
+        </article>
+
+        <article class="show">
+          <div>
+            <div class="time">22:00</div>
+            <h3>Night Drive</h3>
+            <p>Deep house, lounge et sons nocturnes en ambiance club.</p>
+          </div>
+          <div class="host">Avec DJ Nass</div>
+        </article>
+
+        <article class="show">
+          <div>
+            <div class="time">00:00</div>
+            <h3>Late Frequency</h3>
+            <p>Mix continu et replays choisis pour les auditeurs de nuit.</p>
+          </div>
+          <div class="host">Selection auto</div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
